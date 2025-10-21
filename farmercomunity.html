@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmer Community</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #e6fffa 0%, #ebf4ff 100%);
+      min-height: 100vh;
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .glass-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .btn-primary {
+      background: linear-gradient(45deg, #22c55e, #10b981);
+      color: white;
+      border-radius: 0.5rem;
+      padding: 0.5rem 1.5rem;
+      box-shadow: 0 4px 14px rgba(34, 197, 94, 0.4);
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(34, 197, 94, 0.6);
+    }
+    
+    .page-title {
+      background: linear-gradient(45deg, #22c55e, #10b981);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .post-card {
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border-left: 4px solid #22c55e;
+    }
+    
+    .post-card:hover {
+      transform: translateY(-3px);
+    }
+    
+    .user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #22c55e, #10b981);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    
+    .category-badge {
+      background: linear-gradient(45deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.2));
+      color: #22c55e;
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+    
+    .stat-card {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.05));
+      border-radius: 1rem;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    
+    .stat-card:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(16, 185, 129, 0.1));
+    }
+    
+    .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+      background: linear-gradient(45deg, #22c55e, #10b981);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .interaction-btn {
+      color: #6b7280;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+    }
+    
+    .interaction-btn:hover {
+      color: #22c55e;
+      background: rgba(34, 197, 94, 0.1);
+    }
+    
+    .interaction-btn.active {
+      color: #22c55e;
+    }
+    
+    .post-textarea {
+      width: 100%;
+      border: 2px solid #d1d5db;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      font-family: 'Poppins', sans-serif;
+      resize: vertical;
+      transition: all 0.3s ease;
+    }
+    
+    .post-textarea:focus {
+      outline: none;
+      border-color: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+    }
+    
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      border: 2px solid #e5e7eb;
+      background: white;
+      color: #6b7280;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .filter-btn:hover, .filter-btn.active {
+      border-color: #22c55e;
+      background: linear-gradient(45deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1));
+      color: #22c55e;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mx-auto py-10 px-4">
+    <!-- Header Section -->
+    <header class="text-center mb-12 animate__animated animate__fadeIn">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 page-title">Farmer Community</h1>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">Connect, share knowledge, and grow together with fellow farmers</p>
+    </header>
+
+    <!-- Community Stats -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 animate__animated animate__fadeIn">
+      <div class="stat-card">
+        <i class="fas fa-users text-3xl text-green-600 mb-2"></i>
+        <div class="stat-number">15,248</div>
+        <div class="text-gray-600 text-sm">Active Members</div>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-comments text-3xl text-green-600 mb-2"></i>
+        <div class="stat-number">3,567</div>
+        <div class="text-gray-600 text-sm">Discussions</div>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-lightbulb text-3xl text-green-600 mb-2"></i>
+        <div class="stat-number">8,942</div>
+        <div class="text-gray-600 text-sm">Tips Shared</div>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-handshake text-3xl text-green-600 mb-2"></i>
+        <div class="stat-number">1,234</div>
+        <div class="text-gray-600 text-sm">Collaborations</div>
+      </div>
+    </div>
+
+    <!-- Create Post Section -->
+    <div class="glass-card p-6 mb-8 animate__animated animate__fadeIn">
+      <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+        <i class="fas fa-pen-to-square mr-2 text-green-600"></i>
+        Share Your Experience
+      </h2>
+      <div class="flex items-start space-x-4">
+        <div class="user-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="flex-1">
+          <textarea 
+            id="postContent" 
+            class="post-textarea" 
+            rows="3" 
+            placeholder="Share your farming tips, ask questions, or discuss challenges..."
+          ></textarea>
+          <div class="flex items-center justify-between mt-4">
+            <div class="flex space-x-2">
+              <button class="filter-btn" onclick="selectCategory('Tips')">
+                <i class="fas fa-lightbulb mr-1"></i> Tips
+              </button>
+              <button class="filter-btn" onclick="selectCategory('Question')">
+                <i class="fas fa-question-circle mr-1"></i> Question
+              </button>
+              <button class="filter-btn" onclick="selectCategory('Success Story')">
+                <i class="fas fa-trophy mr-1"></i> Story
+              </button>
+            </div>
+            <button class="btn-primary" onclick="createPost()">
+              <i class="fas fa-paper-plane mr-2"></i> Post
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Community Groups Section -->
+    <div class="glass-card p-8 mb-8 animate__animated animate__fadeIn">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold text-green-600 flex items-center">
+          <i class="fas fa-users mr-3"></i> Community Groups
+        </h2>
+        <button class="btn-primary" onclick="toggleGroupsView()">
+          <i class="fas fa-plus mr-2"></i> Create Group
+        </button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="groupsContainer"></div>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="glass-card p-6 mb-8 animate__animated animate__fadeIn">
+      <div class="flex items-center justify-between flex-wrap gap-4">
+        <h2 class="text-xl font-bold text-gray-800 flex items-center">
+          <i class="fas fa-filter mr-2 text-green-600"></i>
+          Filter Posts
+        </h2>
+        <div class="flex space-x-2 flex-wrap gap-2">
+          <button class="filter-btn active" onclick="filterPosts('all')">All</button>
+          <button class="filter-btn" onclick="filterPosts('Tips')">Tips</button>
+          <button class="filter-btn" onclick="filterPosts('Question')">Questions</button>
+          <button class="filter-btn" onclick="filterPosts('Success Story')">Stories</button>
+          <button class="filter-btn" onclick="filterPosts('Discussion')">Discussions</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Community Posts -->
+    <div id="postsContainer" class="space-y-6"></div>
+  </div>
+
+  <script>
+    let selectedCategory = 'Tips';
+    let currentFilter = 'all';
+    
+    const posts = [
+      {
+        id: 1,
+        author: 'Ramesh Kumar',
+        avatar: 'RK',
+        category: 'Tips',
+        time: '2 hours ago',
+        content: 'Discovered that intercropping marigold with tomatoes significantly reduced pest attacks. Saved 30% on pesticide costs this season! Anyone else tried companion planting?',
+        likes: 142,
+        comments: 23,
+        shares: 8
+      },
+      {
+        id: 2,
+        author: 'Priya Sharma',
+        avatar: 'PS',
+        category: 'Question',
+        time: '5 hours ago',
+        content: 'Looking for advice on drip irrigation setup for 2-acre field. What's the approximate cost and maintenance requirements? Any recommendations for reliable suppliers?',
+        likes: 67,
+        comments: 31,
+        shares: 4
+      },
+      {
+        id: 3,
+        author: 'Suresh Patel',
+        avatar: 'SP',
+        category: 'Success Story',
+        time: '1 day ago',
+        content: 'Switched to organic farming 3 years ago. Initially challenging, but now earning 40% more with better soil health. Happy to answer questions about the transition process!',
+        likes: 289,
+        comments: 56,
+        shares: 34
+      },
+      {
+        id: 4,
+        author: 'Anjali Reddy',
+        avatar: 'AR',
+        category: 'Discussion',
+        time: '1 day ago',
+        content: 'Government announced new subsidy for solar-powered pump sets. Has anyone applied? What documents are required?',
+        likes: 95,
+        comments: 42,
+        shares: 15
+      },
+      {
+        id: 5,
+        author: 'Vijay Singh',
+        avatar: 'VS',
+        category: 'Tips',
+        time: '2 days ago',
+        content: 'Pro tip: Apply neem oil spray early morning for maximum effectiveness against aphids. Been using this method for 5 years with great results!',
+        likes: 178,
+        comments: 28,
+        shares: 19
+      },
+      {
+        id: 6,
+        author: 'Meera Devi',
+        avatar: 'MD',
+        category: 'Question',
+        time: '3 days ago',
+        content: 'Can someone explain the difference between NPK ratios for different crops? Confused about which fertilizer to use for wheat vs rice.',
+        likes: 54,
+        comments: 38,
+        shares: 6
+      }
+    ];
+
+    function renderPosts(filteredPosts = posts) {
+      const container = document.getElementById('postsContainer');
+      container.innerHTML = '';
+      
+      filteredPosts.forEach(post => {
+        const postHTML = `
+          <div class="post-card glass-card p-6 animate__animated animate__fadeIn" data-category="${post.category}">
+            <div class="flex items-start space-x-4">
+              <div class="user-avatar">${post.avatar}</div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-2">
+                  <div>
+                    <h3 class="font-bold text-gray-800">${post.author}</h3>
+                    <div class="flex items-center space-x-2 text-sm text-gray-500">
+                      <span>${post.time}</span>
+                      <span>•</span>
+                      <span class="category-badge">${post.category}</span>
+                    </div>
+                  </div>
+                </div>
+                <p class="text-gray-700 mb-4">${post.content}</p>
+                <div class="flex items-center space-x-6 text-gray-600">
+                  <button class="interaction-btn" onclick="toggleLike(${post.id}, this)">
+                    <i class="far fa-heart mr-1"></i>
+                    <span>${post.likes}</span>
+                  </button>
+                  <button class="interaction-btn">
+                    <i class="far fa-comment mr-1"></i>
+                    <span>${post.comments}</span>
+                  </button>
+                  <button class="interaction-btn">
+                    <i class="far fa-share-from-square mr-1"></i>
+                    <span>${post.shares}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        container.innerHTML += postHTML;
+      });
+    }
+
+    function selectCategory(category) {
+      selectedCategory = category;
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.closest('button').classList.add('active');
+    }
+
+    function createPost() {
+      const content = document.getElementById('postContent').value.trim();
+      if (content) {
+        const newPost = {
+          id: posts.length + 1,
+          author: 'You',
+          avatar: 'Y',
+          category: selectedCategory,
+          time: 'Just now',
+          content: content,
+          likes: 0,
+          comments: 0,
+          shares: 0
+        };
+        posts.unshift(newPost);
+        document.getElementById('postContent').value = '';
+        renderPosts(currentFilter === 'all' ? posts : posts.filter(p => p.category === currentFilter));
+      }
+    }
+
+    function filterPosts(category) {
+      currentFilter = category;
+      const buttons = document.querySelectorAll('.glass-card .filter-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      if (category === 'all') {
+        renderPosts(posts);
+      } else {
+        const filtered = posts.filter(post => post.category === category);
+        renderPosts(filtered);
+      }
+    }
+
+    function toggleLike(postId, button) {
+      const post = posts.find(p => p.id === postId);
+      if (post) {
+        const icon = button.querySelector('i');
+        const span = button.querySelector('span');
+        
+        if (icon.classList.contains('far')) {
+          icon.classList.remove('far');
+          icon.classList.add('fas');
+          button.classList.add('active');
+          post.likes++;
+        } else {
+          icon.classList.remove('fas');
+          icon.classList.add('far');
+          button.classList.remove('active');
+          post.likes--;
+        }
+        span.textContent = post.likes;
+      }
+    }
+
+    // Initialize posts
+    renderPosts();
+  </script>
+</body>
+</html>

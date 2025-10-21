@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriBot - Your Farming Assistant</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #2E7D32 0%, #2E7D32 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .chat-container {
+      width: 100%;
+      max-width: 900px;
+      height: 90vh;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 25px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .bot-avatar {
+      width: 60px;
+      height: 60px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .bot-avatar i {
+      font-size: 30px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .bot-info h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .bot-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #4ade80;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .header-btn {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .header-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
+    }
+
+    .language-selector {
+      position: relative;
+    }
+
+    .language-dropdown {
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      padding: 10px;
+      display: none;
+      z-index: 1000;
+      min-width: 150px;
+    }
+
+    .language-dropdown.active {
+      display: block;
+    }
+
+    .language-option {
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 8px;
+      color: #2d3748;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .language-option:hover {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .language-option.selected {
+      background: rgba(102, 126, 234, 0.1);
+      font-weight: 600;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 30px;
+      background: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .chat-messages::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .chat-messages::-webkit-scrollbar-track {
+      background: #e9ecef;
+    }
+
+    .chat-messages::-webkit-scrollbar-thumb {
+      background: #cbd5e0;
+      border-radius: 10px;
+    }
+
+    .message {
+      display: flex;
+      gap: 15px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .message.user {
+      flex-direction: row-reverse;
+    }
+
+    .message-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .message.bot .message-avatar {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .message.user .message-avatar {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+    }
+
+    .message-content {
+      max-width: 70%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .message-bubble {
+      padding: 15px 20px;
+      border-radius: 18px;
+      line-height: 1.6;
+      word-wrap: break-word;
+    }
+
+    .message.bot .message-bubble {
+      background: white;
+      color: #2d3748;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      border-bottom-left-radius: 5px;
+    }
+
+    .message.user .message-bubble {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-bottom-right-radius: 5px;
+    }
+
+    .message-time {
+      font-size: 11px;
+      color: #a0aec0;
+      padding: 0 5px;
+    }
+
+    .message.user .message-time {
+      text-align: right;
+    }
+
+    .quick-replies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 5px;
+    }
+
+    .quick-reply-btn {
+      background: white;
+      border: 2px solid #667eea;
+      color: #667eea;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+    }
+
+    .quick-reply-btn:hover {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .typing-indicator {
+      display: flex;
+      gap: 6px;
+      padding: 15px 20px;
+      background: white;
+      border-radius: 18px;
+      border-bottom-left-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      width: fit-content;
+    }
+
+    .typing-dot {
+      width: 10px;
+      height: 10px;
+      background: #a0aec0;
+      border-radius: 50%;
+      animation: typing 1.4s infinite;
+    }
+
+    .typing-dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes typing {
+      0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 0.7;
+      }
+      30% {
+        transform: translateY(-10px);
+        opacity: 1;
+      }
+    }
+
+    .chat-input-area {
+      padding: 20px 30px;
+      background: white;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .input-wrapper {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .chat-input {
+      flex: 1;
+      border: 2px solid #e2e8f0;
+      border-radius: 25px;
+      padding: 15px 25px;
+      font-size: 15px;
+      font-family: 'Poppins', sans-serif;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .chat-input:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    }
+
+    .send-btn {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      font-size: 18px;
+    }
+
+    .send-btn:hover {
+      transform: scale(1.1) rotate(15deg);
+      box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .send-btn:active {
+      transform: scale(0.95);
+    }
+
+    .send-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .suggestions-area {
+      padding: 15px 30px 0;
+      background: white;
+    }
+
+    .suggestions-title {
+      font-size: 13px;
+      color: #718096;
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .suggestions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-bottom: 15px;
+    }
+
+    .suggestion-chip {
+      background: #f7fafc;
+      border: 1px solid #e2e8f0;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      color: #4a5568;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .suggestion-chip:hover {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-color: transparent;
+      transform: translateY(-2px);
+    }
+
+    .welcome-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px;
+      gap: 20px;
+    }
+
+    .welcome-icon {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+    }
+
+    .welcome-icon i {
+      font-size: 60px;
+      color: white;
+    }
+
+    .welcome-text h2 {
+      font-size: 28px;
+      color: #2d3748;
+      margin-bottom: 10px;
+    }
+
+    .welcome-text p {
+      font-size: 16px;
+      color: #718096;
+      line-height: 1.6;
+    }
+
+    .feature-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 30px;
+      width: 100%;
+    }
+
+    .feature-card {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+    }
+
+    .feature-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+
+    .feature-icon i {
+      font-size: 24px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .feature-card h3 {
+      font-size: 16px;
+      color: #2d3748;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 13px;
+      color: #718096;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .chat-container {
+        height: 100vh;
+        max-width: 100%;
+        border-radius: 0;
+      }
+
+      .chat-header {
+        padding: 20px;
+      }
+
+      .bot-info h1 {
+        font-size: 20px;
+      }
+
+      .chat-messages {
+        padding: 20px;
+      }
+
+      .message-content {
+        max-width: 85%;
+      }
+
+      .feature-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+      <div class="header-left">
+        <div class="bot-avatar">
+          <i class="fas fa-robot"></i>
+        </div>
+        <div class="bot-info">
+          <h1 id="botTitle">AgriBot Assistant</h1>
+          <div class="bot-status">
+            <div class="status-dot"></div>
+            <span id="botStatus">Online & Ready to Help</span>
+          </div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="language-selector">
+          <button class="header-btn" onclick="toggleLanguageDropdown()" title="Change Language">
+            <i class="fas fa-language"></i>
+          </button>
+          <div class="language-dropdown" id="languageDropdown">
+            <div class="language-option selected" onclick="changeLanguage('en')">
+              <i class="fas fa-globe"></i> English
+            </div>
+            <div class="language-option" onclick="changeLanguage('hi')">
+              <i class="fas fa-globe"></i> हिंदी
+            </div>
+            <div class="language-option" onclick="changeLanguage('mr')">
+              <i class="fas fa-globe"></i> मराठी
+            </div>
+          </div>
+        </div>
+        <button class="header-btn" onclick="clearChat()" title="Clear Chat">
+          <i class="fas fa-trash"></i>
+        </button>
+        <button class="header-btn" onclick="toggleInfo()" title="Information">
+          <i class="fas fa-info-circle"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+      <div class="welcome-screen" id="welcomeScreen">
+        <!-- Will be populated by JavaScript -->
+      </div>
+    </div>
+
+    <div class="suggestions-area" id="suggestionsArea" style="display: none;">
+      <div class="suggestions-title" id="suggestionsTitle">💡 Suggested topics:</div>
+      <div class="suggestions" id="suggestionsContainer">
+        <!-- Will be populated by JavaScript -->
+      </div>
+    </div>
+
+    <div class="chat-input-area">
+      <div class="input-wrapper">
+        <input 
+          type="text" 
+          class="chat-input" 
+          id="chatInput" 
+          placeholder="Ask me anything about farming..."
+          onkeypress="handleKeyPress(event)"
+        />
+        <button class="send-btn" onclick="sendMessage()" id="sendBtn">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let messageCount = 0;
+    let currentLanguage = 'en';
+
+    const translations = {
+      en: {
+        botTitle: "AgriBot Assistant",
+        botStatus: "Online & Ready to Help",
+        inputPlaceholder: "Ask me anything about farming...",
+        welcomeTitle: "Welcome to AgriBot! 🌾",
+        welcomeDesc: "Your intelligent farming assistant. I can help you with crop management, pest control, government schemes, market prices, and much more!",
+        suggestionsTitle: "💡 Suggested topics:",
+        features: [
+          { title: "Organic Farming", desc: "Learn sustainable farming practices", query: "Tell me about organic farming", icon: "leaf" },
+          { title: "Govt Schemes", desc: "Explore subsidies and benefits", query: "What are the government schemes for farmers?", icon: "landmark" },
+          { title: "Pest Control", desc: "Natural pest management tips", query: "How to control pests naturally?", icon: "bug" },
+          { title: "Market Prices", desc: "Get real-time market updates", query: "Show me current crop prices", icon: "chart-line" }
+        ],
+        suggestions: [
+          { text: "Irrigation", icon: "droplet", query: "Drip irrigation benefits" },
+          { text: "Soil Health", icon: "flask", query: "Soil health tips" },
+          { text: "Weather", icon: "cloud-sun", query: "Weather forecast" },
+          { text: "Crop Rotation", icon: "rotate", query: "Crop rotation" }
+        ]
+      },
+      hi: {
+        botTitle: "एग्रीबॉट सहायक",
+        botStatus: "ऑनलाइन और मदद के लिए तैयार",
+        inputPlaceholder: "खेती के बारे में कुछ भी पूछें...",
+        welcomeTitle: "एग्रीबॉट में आपका स्वागत है! 🌾",
+        welcomeDesc: "आपका बुद्धिमान खेती सहायक। मैं फसल प्रबंधन, कीट नियंत्रण, सरकारी योजनाओं, बाजार मूल्य और बहुत कुछ में आपकी मदद कर सकता हूं!",
+        suggestionsTitle: "💡 सुझाए गए विषय:",
+        features: [
+          { title: "जैविक खेती", desc: "टिकाऊ खेती के तरीके सीखें", query: "जैविक खेती के बारे में बताएं", icon: "leaf" },
+          { title: "सरकारी योजनाएं", desc: "सब्सिडी और लाभ जानें", query: "किसानों के लिए सरकारी योजनाएं क्या हैं?", icon: "landmark" },
+          { title: "कीट नियंत्रण", desc: "प्राकृतिक कीट प्रबंधन युक्तियाँ", query: "कीटों को प्राकृतिक रूप से कैसे नियंत्रित करें?", icon: "bug" },
+          { title: "बाजार मूल्य", desc: "वास्तविक समय बाजार अपडेट प्राप्त करें", query: "वर्तमान फसल की कीमतें दिखाएं", icon: "chart-line" }
+        ],
+        suggestions: [
+          { text: "सिंचाई", icon: "droplet", query: "ड्रिप सिंचाई के लाभ" },
+          { text: "मिट्टी स्वास्थ्य", icon: "flask", query: "मिट्टी स्वास्थ्य सुझाव" },
+          { text: "मौसम", icon: "cloud-sun", query: "मौसम पूर्वानुमान" },
+          { text: "फसल चक्र", icon: "rotate", query: "फसल चक्रण" }
+        ]
+      },
+      mr: {
+        botTitle: "एग्रीबॉट सहाय्यक",
+        botStatus: "ऑनलाइन आणि मदतीसाठी तयार",
+        inputPlaceholder: "शेतीविषयी काहीही विचारा...",
+        welcomeTitle: "एग्रीबॉटमध्ये आपले स्वागत आहे! 🌾",
+        welcomeDesc: "तुमचा बुद्धिमान शेती सहाय्यक. मी पीक व्यवस्थापन, कीटक नियंत्रण, सरकारी योजना, बाजार किंमती आणि बरेच काही यात तुम्हाला मदत करू शकतो!",
+        suggestionsTitle: "💡 सुचवलेले विषय:",
+        features: [
+          { title: "सेंद्रिय शेती", desc: "शाश्वत शेती पद्धती शिका", query: "सेंद्रिय शेतीबद्दल सांगा", icon: "leaf" },
+          { title: "सरकारी योजना", desc: "अनुदान आणि फायदे शोधा", query: "शेतकऱ्यांसाठी सरकारी योजना काय आहेत?", icon: "landmark" },
+          { title: "कीटक नियंत्रण", desc: "नैसर्गिक कीटक व्यवस्थापन टिपा", query: "कीटकांना नैसर्गिकरित्या कसे नियंत्रित करावे?", icon: "bug" },
+          { title: "बाजार किंमती", desc: "रिअल-टाइम बाजार अपडेट मिळवा", query: "सध्याच्या पिकाच्या किमती दाखवा", icon: "chart-line" }
+        ],
+        suggestions: [
+          { text: "सिंचन", icon: "droplet", query: "थेंब सिंचनाचे फायदे" },
+          { text: "माती आरोग्य", icon: "flask", query: "माती आरोग्य टिपा" },
+          { text: "हवामान", icon: "cloud-sun", query: "हवामान अंदाज" },
+          { text: "पीक चक्र", icon: "rotate", query: "पीक चक्रण" }
+        ]
+      }
+    };
+
+    const responses = {
+      en: {
+        organic: {
+          text: `🌿 <strong>Organic Farming Guide</strong><br><br>
+          Organic farming uses natural methods without synthetic chemicals. Here are the key benefits:<br><br>
+          ✅ <strong>Better Soil Health:</strong> Natural composting improves soil structure<br>
+          ✅ <strong>Higher Prices:</strong> 20-30% premium in market<br>
+          ✅ <strong>Government Support:</strong> Special subsidies available<br>
+          ✅ <strong>Eco-friendly:</strong> Sustainable for environment<br><br>
+          Would you like to know about certification or specific techniques?`,
+          quickReplies: ['Certification process', 'Organic pest control', 'Composting methods']
+        },
+        government: {
+          text: `🏛️ <strong>Government Schemes for Farmers</strong><br><br>
+          <strong>1. PM-KISAN:</strong> ₹6,000/year direct benefit transfer<br>
+          <strong>2. Soil Health Card:</strong> Free soil testing services<br>
+          <strong>3. PM Fasal Bima Yojana:</strong> Crop insurance at subsidized rates<br>
+          <strong>4. Kisan Credit Card:</strong> Easy credit access<br>
+          <strong>5. Drip Irrigation Subsidy:</strong> 60-80% subsidy available<br><br>
+          Which scheme would you like to know more about?`,
+          quickReplies: ['PM-KISAN details', 'Crop insurance', 'KCC benefits']
+        },
+        pest: {
+          text: `🐛 <strong>Effective Pest Control Methods</strong><br><br>
+          <strong>Organic Solutions:</strong><br>
+          🌿 Neem oil spray (5ml per liter of water)<br>
+          🌸 Companion planting (marigold with vegetables)<br>
+          🦗 Pheromone traps for specific pests<br><br>
+          <strong>Preventive Measures:</strong><br>
+          ✅ Crop rotation every season<br>
+          ✅ Maintain field hygiene<br>
+          ✅ Regular monitoring<br>
+          ✅ Use resistant varieties<br><br>
+          What type of pest are you dealing with?`,
+          quickReplies: ['Aphids control', 'Fungal diseases', 'Caterpillar management']
+        },
+        hello: {
+          text: `Hello! 👋 Welcome to AgriBot! I'm here to help you with all your farming needs. How can I assist you today?`,
+          quickReplies: ['Government schemes', 'Pest control tips', 'Market prices', 'Irrigation methods']
+        },
+        thanks: {
+          text: `You're welcome! 😊 I'm always here to help. Feel free to ask if you have more questions about farming!`,
+          quickReplies: ['Ask another question', 'Government schemes', 'Crop tips']
+        }
+      },
+      hi: {
+        organic: {
+          text: `🌿 <strong>जैविक खेती गाइड</strong><br><br>
+          जैविक खेती में सिंथेटिक रसायनों के बिना प्राकृतिक तरीके उपयोग किए जाते हैं। यहाँ मुख्य लाभ हैं:<br><br>
+          ✅ <strong>बेहतर मिट्टी स्वास्थ्य:</strong> प्राकृतिक खाद मिट्टी की संरचना में सुधार करती है<br>
+          ✅ <strong>उच्च कीमतें:</strong> बाजार में 20-30% प्रीमियम<br>
+          ✅ <strong>सरकारी समर्थन:</strong> विशेष सब्सिडी उपलब्ध<br>
+          ✅ <strong>पर्यावरण-अनुकूल:</strong> पर्यावरण के लिए टिकाऊ<br><br>
+          क्या आप प्रमाणन या विशिष्ट तकनीकों के बारे में जानना चाहेंगे?`,
+          quickReplies: ['प्रमाणन प्रक्रिया', 'जैविक कीट नियंत्रण', 'खाद बनाने के तरीके']
+        },
+        government: {
+          text: `🏛️ <strong>किसानों के लिए सरकारी योजनाएं</strong><br><br>
+          <strong>1. पीएम-किसान:</strong><strong>2. मिट्टी स्वास्थ्य कार्ड:</strong> मुफ्त मिट्टी परीक्षण सेवाएं<br>
+          <strong>3. पीएम फसल बीमा योजना:</strong> सब्सिडी दरों पर फसल बीमा<br>
+          <strong>4. किसान क्रेडिट कार्ड:</strong> आसान ऋण पहुंच<br>
+          <strong>5. ड्रिप सिंचाई सब्सिडी:</strong> 60-80% सब्सिडी उपलब्ध<br><br>
+          आप किस योजना के बारे में अधिक जानना चाहेंगे?`,
+          quickReplies: ['पीएम-किसान विवरण', 'फसल बीमा', 'केसीसी लाभ']
+        },
+        pest: {
+          text: `🐛 <strong>प्रभावी कीट नियंत्रण विधियां</strong><br><br>
+          <strong>जैविक समाधान:</strong><br>
+          🌿 नीम तेल स्प्रे (5 मिली प्रति लीटर पानी)<br>
+          🌸 साथी रोपण (सब्जियों के साथ गेंदा)<br>
+          🦗 विशिष्ट कीटों के लिए फेरोमोन ट्रैप<br><br>
+          <strong>निवारक उपाय:</strong><br>
+          ✅ हर मौसम फसल चक्रण<br>
+          ✅ खेत की स्वच्छता बनाए रखें<br>
+          ✅ नियमित निगरानी<br>
+          ✅ प्रतिरोधी किस्मों का उपयोग करें<br><br>
+          आप किस प्रकार के कीट से निपट रहे हैं?`,
+          quickReplies: ['एफिड्स नियंत्रण', 'फंगल रोग', 'कैटरपिलर प्रबंधन']
+        },
+        hello: {
+          text: `नमस्ते! 👋 एग्रीबॉट में आपका स्वागत है! मैं आपकी सभी खेती संबंधी जरूरतों में मदद के लिए यहां हूं। आज मैं आपकी कैसे सहायता कर सकता हूं?`,
+          quickReplies: ['सरकारी योजनाएं', 'कीट नियंत्रण टिप्स', 'बाजार मूल्य', 'सिंचाई विधियां']
+        },
+        thanks: {
+          text: `आपका स्वागत है! 😊 मैं हमेशा मदद के लिए यहां हूं। खेती के बारे में अधिक सवाल हों तो बेझिझक पूछें!`,
+          quickReplies: ['दूसरा सवाल पूछें', 'सरकारी योजनाएं', 'फसल टिप्स']
+        }
+      },
+      mr: {
+        organic: {
+          text: `🌿 <strong>सेंद्रिय शेती मार्गदर्शक</strong><br><br>
+          सेंद्रिय शेतीमध्ये सिंथेटिक रसायनांशिवाय नैसर्गिक पद्धती वापरल्या जातात. येथे मुख्य फायदे आहेत:<br><br>
+          ✅ <strong>चांगले माती आरोग्य:</strong> नैसर्गिक कंपोस्टिंग माती संरचना सुधारते<br>
+          ✅ <strong>उच्च किंमती:</strong> बाजारात 20-30% प्रीमियम<br>
+          ✅ <strong>सरकारी समर्थन:</strong> विशेष अनुदान उपलब्ध<br>
+          ✅ <strong>पर्यावरण-अनुकूल:</strong> पर्यावरणासाठी शाश्वत<br><br>
+          तुम्हाला प्रमाणन किंवा विशिष्ट तंत्रांबद्दल जाणून घ्यायचे आहे का?`,
+          quickReplies: ['प्रमाणन प्रक्रिया', 'सेंद्रिय कीटक नियंत्रण', 'खत बनवण्याच्या पद्धती']
+        },
+        government: {
+          text: `🏛️ <strong>शेतकऱ्यांसाठी सरकारी योजना</strong><br><br>
+          <strong>1. पीएम-किसान:</strong> ₹6,000/वर्ष थेट लाभ हस्तांतरण<br>
+          <strong>2. माती आरोग्य कार्ड:</strong> मोफत माती चाचणी सेवा<br>
+          <strong>3. पीएम फसल बिमा योजना:</strong> सवलतीच्या दरात पीक विमा<br>
+          <strong>4. किसान क्रेडिट कार्ड:</strong> सुलभ कर्ज प्रवेश<br>
+          <strong>5. थेंब सिंचन अनुदान:</strong> 60-80% अनुदान उपलब्ध<br><br>
+          तुम्हाला कोणत्या योजनेबद्दल अधिक जाणून घ्यायचे आहे?`,
+          quickReplies: ['पीएम-किसान तपशील', 'पीक विमा', 'केसीसी फायदे']
+        },
+        pest: {
+          text: `🐛 <strong>प्रभावी कीटक नियंत्रण पद्धती</strong><br><br>
+          <strong>सेंद्रिय उपाय:</strong><br>
+          🌿 कडुनिंब तेल फवारणी (5 मिली प्रति लिटर पाणी)<br>
+          🌸 सहचर लागवड (भाज्यांसह झेंडू)<br>
+          🦗 विशिष्ट कीटकांसाठी फेरोमोन सापळे<br><br>
+          <strong>प्रतिबंधात्मक उपाय:</strong><br>
+          ✅ प्रत्येक हंगामात पीक चक्रण<br>
+          ✅ शेताची स्वच्छता राखा<br>
+          ✅ नियमित निरीक्षण<br>
+          ✅ प्रतिरोधक जाती वापरा<br><br>
+          तुम्ही कोणत्या प्रकारच्या कीटकाशी सामना करत आहात?`,
+          quickReplies: ['ऍफिड्स नियंत्रण', 'बुरशीजन्य रोग', 'सुरवंट व्यवस्थापन']
+        },
+        hello: {
+          text: `नमस्कार! 👋 एग्रीबॉटमध्ये आपले स्वागत आहे! मी तुमच्या सर्व शेती गरजांमध्ये मदत करण्यासाठी येथे आहे. आज मी तुम्हाला कशी मदत करू शकतो?`,
+          quickReplies: ['सरकारी योजना', 'कीटक नियंत्रण टिपा', 'बाजार किंमती', 'सिंचन पद्धती']
+        },
+        thanks: {
+          text: `तुमचे स्वागत आहे! 😊 मी नेहमी मदतीसाठी येथे आहे. शेतीबद्दल अधिक प्रश्न असल्यास विचारण्यास मोकळे रहा!`,
+          quickReplies: ['दुसरा प्रश्न विचारा', 'सरकारी योजना', 'पीक टिपा']
+        }
+      }
+    };
+
+    function initWelcomeScreen() {
+      const t = translations[currentLanguage];
+      const welcomeScreen = document.getElementById('welcomeScreen');
+      
+      welcomeScreen.innerHTML = `
+        <div class="welcome-icon">
+          <i class="fas fa-seedling"></i>
+        </div>
+        <div class="welcome-text">
+          <h2>${t.welcomeTitle}</h2>
+          <p>${t.welcomeDesc}</p>
+        </div>
+        <div class="feature-cards">
+          ${t.features.map(feature => `
+            <div class="feature-card" onclick="handleFeatureClick('${feature.query}')">
+              <div class="feature-icon">
+                <i class="fas fa-${feature.icon}"></i>
+              </div>
+              <h3>${feature.title}</h3>
+              <p>${feature.desc}</p>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    function initSuggestions() {
+      const t = translations[currentLanguage];
+      const suggestionsContainer = document.getElementById('suggestionsContainer');
+      const suggestionsTitle = document.getElementById('suggestionsTitle');
+      
+      suggestionsTitle.textContent = t.suggestionsTitle;
+      suggestionsContainer.innerHTML = t.suggestions.map(s => `
+        <div class="suggestion-chip" onclick="handleSuggestionClick('${s.query}')">
+          <i class="fas fa-${s.icon}"></i> ${s.text}
+        </div>
+      `).join('');
+    }
+
+    function changeLanguage(lang) {
+      currentLanguage = lang;
+      const t = translations[lang];
+      
+      document.getElementById('botTitle').textContent = t.botTitle;
+      document.getElementById('botStatus').textContent = t.botStatus;
+      document.getElementById('chatInput').placeholder = t.inputPlaceholder;
+      
+      document.querySelectorAll('.language-option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      event.target.closest('.language-option').classList.add('selected');
+      
+      toggleLanguageDropdown();
+      
+      if (messageCount === 0) {
+        initWelcomeScreen();
+      }
+      
+      initSuggestions();
+    }
+
+    function toggleLanguageDropdown() {
+      const dropdown = document.getElementById('languageDropdown');
+      dropdown.classList.toggle('active');
+    }
+
+    function handleFeatureClick(query) {
+      document.getElementById('chatInput').value = query;
+      sendMessage();
+    }
+
+    function handleSuggestionClick(query) {
+      document.getElementById('chatInput').value = query;
+      sendMessage();
+    }
+
+    function clearChat() {
+      if (confirm('Are you sure you want to clear the chat?')) {
+        messageCount = 0;
+        const chatMessages = document.getElementById('chatMessages');
+        chatMessages.innerHTML = '<div class="welcome-screen" id="welcomeScreen"></div>';
+        initWelcomeScreen();
+        document.getElementById('suggestionsArea').style.display = 'none';
+      }
+    }
+
+    function toggleInfo() {
+      alert('AgriBot v1.0\n\nYour intelligent farming assistant powered by AI.\n\nFeatures:\n• Multi-language support\n• Government schemes info\n• Pest control guidance\n• Market updates\n• Organic farming tips');
+    }
+
+    function getTimeString() {
+      const now = new Date();
+      return now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function addMessage(text, isUser, quickReplies = []) {
+      const chatMessages = document.getElementById('chatMessages');
+      const welcomeScreen = document.getElementById('welcomeScreen');
+      
+      if (welcomeScreen) {
+        welcomeScreen.remove();
+      }
+
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+      
+      messageDiv.innerHTML = `
+        <div class="message-avatar">${isUser ? '👤' : '🤖'}</div>
+        <div class="message-content">
+          <div class="message-bubble">${text}</div>
+          <div class="message-time">${getTimeString()}</div>
+          ${quickReplies.length > 0 ? `
+            <div class="quick-replies">
+              ${quickReplies.map(reply => `
+                <button class="quick-reply-btn" onclick="handleQuickReply('${reply}')">${reply}</button>
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
+      `;
+      
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      
+      if (messageCount === 0) {
+        document.getElementById('suggestionsArea').style.display = 'block';
+      }
+      messageCount++;
+    }
+
+    function showTypingIndicator() {
+      const chatMessages = document.getElementById('chatMessages');
+      const typingDiv = document.createElement('div');
+      typingDiv.className = 'message bot';
+      typingDiv.id = 'typingIndicator';
+      
+      typingDiv.innerHTML = `
+        <div class="message-avatar">🤖</div>
+        <div class="message-content">
+          <div class="typing-indicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+        </div>
+      `;
+      
+      chatMessages.appendChild(typingDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+      const typingIndicator = document.getElementById('typingIndicator');
+      if (typingIndicator) {
+        typingIndicator.remove();
+      }
+    }
+
+    function getBotResponse(userMessage) {
+      const message = userMessage.toLowerCase();
+      const lang = currentLanguage;
+      const r = responses[lang];
+      
+      if (message.includes('organic') || message.includes('जैविक') || message.includes('सेंद्रिय')) {
+        return r.organic;
+      } else if (message.includes('government') || message.includes('scheme') || message.includes('सरकार') || message.includes('योजना')) {
+        return r.government;
+      } else if (message.includes('pest') || message.includes('कीट') || message.includes('कीटक')) {
+        return r.pest;
+      } else if (message.includes('hello') || message.includes('hi') || message.includes('नमस्ते') || message.includes('नमस्कार')) {
+        return r.hello;
+      } else if (message.includes('thank') || message.includes('धन्यवाद')) {
+        return r.thanks;
+      } else {
+        return {
+          text: lang === 'en' 
+            ? `I understand you're asking about "${userMessage}". I can help you with:<br>
+               🌾 Organic farming techniques<br>
+               🏛️ Government schemes & subsidies<br>
+               🐛 Pest control methods<br>
+               💰 Market prices & trends<br>
+               💧 Irrigation systems<br><br>
+               What would you like to know more about?`
+            : lang === 'hi'
+            ? `मैं समझता हूं कि आप "${userMessage}" के बारे में पूछ रहे हैं। मैं आपकी मदद कर सकता हूं:<br>
+               🌾 जैविक खेती तकनीक<br>
+               🏛️ सरकारी योजनाएं और सब्सिडी<br>
+               🐛 कीट नियंत्रण विधियां<br>
+               💰 बाजार मूल्य और रुझान<br>
+               💧 सिंचाई प्रणाली<br><br>
+               आप किस बारे में अधिक जानना चाहेंगे?`
+            : `मला समजले की तुम्ही "${userMessage}" बद्दल विचारत आहात। मी तुम्हाला मदत करू शकतो:<br>
+               🌾 सेंद्रिय शेती तंत्र<br>
+               🏛️ सरकारी योजना आणि अनुदान<br>
+               🐛 कीटक नियंत्रण पद्धती<br>
+               💰 बाजार किंमती आणि ट्रेंड<br>
+               💧 सिंचन प्रणाली<br><br>
+               तुम्हाला कशाबद्दल अधिक जाणून घ्यायचे आहे?`,
+          quickReplies: lang === 'en' 
+            ? ['Organic farming', 'Government schemes', 'Pest control']
+            : lang === 'hi'
+            ? ['जैविक खेती', 'सरकारी योजनाएं', 'कीट नियंत्रण']
+            : ['सेंद्रिय शेती', 'सरकारी योजना', 'कीटक नियंत्रण']
+        };
+      }
+    }
+
+    function handleQuickReply(reply) {
+      document.getElementById('chatInput').value = reply;
+      sendMessage();
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const message = input.value.trim();
+      
+      if (message === '') return;
+      
+      addMessage(message, true);
+      input.value = '';
+      
+      showTypingIndicator();
+      
+      setTimeout(() => {
+        removeTypingIndicator();
+        const response = getBotResponse(message);
+        addMessage(response.text, false, response.quickReplies || []);
+      }, 1000 + Math.random() * 1000);
+    }
+
+    function handleKeyPress(event) {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    }
+
+    document.addEventListener('click', function(event) {
+      const dropdown = document.getElementById('languageDropdown');
+      const langBtn = event.target.closest('.language-selector');
+      
+      if (!langBtn && dropdown.classList.contains('active')) {
+        dropdown.classList.remove('active');
+      }
+    });
+
+    window.onload = function() {
+      initWelcomeScreen();
+      initSuggestions();
+    };
+  </script>
+</body>
+</html>
