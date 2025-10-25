@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Page</title>
+    <title>Palm Oil Farmers</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @keyframes fadeIn {
@@ -13,28 +13,67 @@
         .animate-fade {
             animation: fadeIn 1s ease-in-out;
         }
+        .product-image {
+            width: 112px;
+            height: 112px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
     </style>
     <script>
         function searchFarmers() {
             let input = document.getElementById("searchInput").value.toLowerCase();
-            let cards = document.querySelectorAll(".text-center.bg-white");
+            let cards = document.querySelectorAll(".farmer-card");
     
             cards.forEach(card => {
                 let name = card.querySelector("h3").innerText.toLowerCase();
-                if (name.includes(input)) {
+                let product = card.querySelector(".product-type").innerText.toLowerCase();
+                if (name.includes(input) || product.includes(input)) {
                     card.style.display = "block";
                 } else {
                     card.style.display = "none";
                 }
             });
         }
+
+        function applyFilters() {
+            let cards = Array.from(document.querySelectorAll(".farmer-card"));
+            let organicFilter = document.getElementById("organicFilter").checked;
+            let lowToHigh = document.getElementById("lowToHigh").checked;
+            let highToLow = document.getElementById("highToLow").checked;
+
+            let visibleCards = cards.filter(card => card.style.display !== "none");
+
+            if (organicFilter) {
+                visibleCards.forEach(card => {
+                    let description = card.querySelector(".text-sm").innerText.toLowerCase();
+                    if (!description.includes("organic")) {
+                        card.style.display = "none";
+                    }
+                });
+                visibleCards = cards.filter(card => card.style.display !== "none");
+            }
+
+            if (lowToHigh || highToLow) {
+                visibleCards.sort((a, b) => {
+                    let priceA = parseFloat(a.querySelector(".text-green-600.font-semibold:nth-of-type(2)").innerText.replace(/[^\d.]/g, ''));
+                    let priceB = parseFloat(b.querySelector(".text-green-600.font-semibold:nth-of-type(2)").innerText.replace(/[^\d.]/g, ''));
+                    return lowToHigh ? priceA - priceB : priceB - priceA;
+                });
+
+                let parent = cards[0].parentNode;
+                visibleCards.forEach(card => parent.appendChild(card));
+            }
+        }
     </script>
     
 </head>
 <body class="bg-gradient-to-br from-green-100 to-green-300 h-screen flex animate-fade">
     <!-- Sidebar Filter -->
-    <div class="w-1/4 bg-white p-6 shadow-lg rounded-lg m-4">
+    <div class="w-1/4 bg-white p-6 shadow-lg rounded-lg m-4 overflow-auto">
         <h2 class="text-2xl font-semibold text-green-700 mb-6 text-center">Filters</h2>
+        
         <div class="space-y-4">
             <label class="block">
                 <input type="checkbox" class="mr-2 accent-green-500" id="verifiedFilter"> Verified Farmers
@@ -54,11 +93,12 @@
             Apply Filters
         </button>
     </div>
+    
     <!-- Main Content -->
     <div class="w-3/4 flex flex-col">
         <!-- Header -->
         <div class="bg-green-600 p-6 flex items-center justify-between text-white shadow-lg">
-            <h1 class="text-2xl font-bold">Farmers & Their Palm Oil</h1>
+            <h1 class="text-2xl font-bold">Palm Oil Farmers & Products</h1>
             <input type="text" placeholder="Search Farmers..." 
                 class="p-3 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-300 shadow-md"
                 id="searchInput" onkeyup="searchFarmers()">
@@ -66,186 +106,203 @@
         
         <!-- Farmer Profiles Grid -->
         <div class="grid grid-cols-2 gap-6 p-6 flex-grow overflow-auto">
-            <!-- Palm Oil Product 1 -->
-            <div class="text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
-                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-orange-400 to-yellow-600 flex items-center justify-center">
-                    <span class="text-5xl">🌴</span>
+            <!-- Palm Oil Product 1 with Image -->
+            <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
+                <div class="flex justify-center">
+                    <img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400&h=400&fit=crop" 
+                         alt="Palm Oil" 
+                         class="product-image"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-orange-400 to-yellow-600 items-center justify-center" style="display:none;">
+                        <span class="text-5xl">🌴</span>
+                    </div>
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Rajesh Kumar</h3>
-                <p class="text-green-600 font-semibold">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹180/Liter</p>
-                <p class="text-sm text-gray-700">Organic, Cold-pressed</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Krishna Menon</h3>
+                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
+                <p class="text-green-600 font-semibold">₹182/Liter</p>
+                <p class="text-sm text-gray-700">Premium Quality, Organic</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700"><a href="Ratilerchat.html">Chat</a></button>
-                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">
-                        <a target="_blank">View Video</a>
-                    </button>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">View Video</button>
                 </div>
             </div>
 
             <!-- Palm Oil Product 2 -->
-            <div class="text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
-                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center">
+            <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
+                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-orange-400 to-yellow-600 flex items-center justify-center">
                     <span class="text-5xl">🌴</span>
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Amit Patel</h3>
-                <p class="text-green-600 font-semibold">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹175/Liter</p>
-                <p class="text-sm text-gray-700">Premium Quality</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Rajesh Kumar</h3>
+                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
+                <p class="text-green-600 font-semibold">₹180/Liter</p>
+                <p class="text-sm text-gray-700">Organic, Cold-pressed</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700"><a href="Ratilerchat.html">Chat</a></button>
-                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">
-                        <a target="_blank">View Video</a>
-                    </button>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">View Video</button>
                 </div>
             </div>
 
             <!-- Palm Oil Product 3 -->
-            <div class="text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
-                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-orange-300 to-red-400 flex items-center justify-center">
+            <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
+                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center">
                     <span class="text-5xl">🌴</span>
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Suresh Naik</h3>
-                <p class="text-green-600 font-semibold">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹190/Liter</p>
-                <p class="text-sm text-gray-700">Extra Virgin, Organic</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Amit Patel</h3>
+                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
+                <p class="text-green-600 font-semibold">₹175/Liter</p>
+                <p class="text-sm text-gray-700">Premium Quality</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700"><a href="Ratilerchat.html">Chat</a></button>
-                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">
-                        <a target="_blank">View Video</a>
-                    </button>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">View Video</button>
                 </div>
             </div>
 
             <!-- Palm Oil Product 4 -->
-            <div class="text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
-                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-yellow-400 to-orange-600 flex items-center justify-center">
+            <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
+                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-orange-300 to-red-400 flex items-center justify-center">
                     <span class="text-5xl">🌴</span>
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Vikram Singh</h3>
-                <p class="text-green-600 font-semibold">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹165/Liter</p>
-                <p class="text-sm text-gray-700">Bulk Available</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Suresh Naik</h3>
+                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
+                <p class="text-green-600 font-semibold">₹190/Liter</p>
+                <p class="text-sm text-gray-700">Extra Virgin, Organic</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700"><a href="Ratilerchat.html">Chat</a></button>
-                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">
-                        <a target="_blank">View Video</a>
-                    </button>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">View Video</button>
                 </div>
             </div>
 
             <!-- Palm Oil Product 5 -->
-            <div class="text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
-                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center">
+            <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
+                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-yellow-400 to-orange-600 flex items-center justify-center">
                     <span class="text-5xl">🌴</span>
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Ramesh Yadav</h3>
-                <p class="text-green-600 font-semibold">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹185/Liter</p>
-                <p class="text-sm text-gray-700">Pure & Natural</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Vikram Singh</h3>
+                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
+                <p class="text-green-600 font-semibold">₹165/Liter</p>
+                <p class="text-sm text-gray-700">Bulk Available</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700"><a href="Ratilerchat.html">Chat</a></button>
-                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">
-                        <a target="_blank">View Video</a>
-                    </button>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">View Video</button>
                 </div>
             </div>
 
             <!-- Palm Oil Product 6 -->
-            <div class="text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
-                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-yellow-600 to-orange-400 flex items-center justify-center">
+            <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
+                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center">
                     <span class="text-5xl">🌴</span>
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Prakash Reddy</h3>
-                <p class="text-green-600 font-semibold">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹170/Liter</p>
-                <p class="text-sm text-gray-700">Certified Organic</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Ramesh Yadav</h3>
+                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
+                <p class="text-green-600 font-semibold">₹185/Liter</p>
+                <p class="text-sm text-gray-700">Pure & Natural</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700"><a href="Ratilerchat.html">Chat</a></button>
-                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">
-                        <a target="_blank">View Video</a>
-                    </button>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">View Video</button>
                 </div>
             </div>
 
             <!-- Palm Oil Product 7 -->
-            <div class="text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
-                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
+            <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
+                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-yellow-600 to-orange-400 flex items-center justify-center">
                     <span class="text-5xl">🌴</span>
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Arjun Desai</h3>
-                <p class="text-green-600 font-semibold">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹195/Liter</p>
-                <p class="text-sm text-gray-700">Premium Cold-pressed</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Prakash Reddy</h3>
+                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
+                <p class="text-green-600 font-semibold">₹170/Liter</p>
+                <p class="text-sm text-gray-700">Certified Organic</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700"><a href="Ratilerchat.html">Chat</a></button>
-                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">
-                        <a target="_blank">View Video</a>
-                    </button>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">View Video</button>
                 </div>
             </div>
 
             <!-- Palm Oil Product 8 -->
-            <div class="text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
-                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center">
+            <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
+                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
                     <span class="text-5xl">🌴</span>
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Manoj Sharma</h3>
-                <p class="text-green-600 font-semibold">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹160/Liter</p>
-                <p class="text-sm text-gray-700">Economy Pack</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Arjun Desai</h3>
+                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
+                <p class="text-green-600 font-semibold">₹195/Liter</p>
+                <p class="text-sm text-gray-700">Premium Cold-pressed</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700"><a href="Ratilerchat.html">Chat</a></button>
-                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">
-                        <a target="_blank">View Video</a>
-                    </button>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">View Video</button>
                 </div>
             </div>
 
             <!-- Palm Oil Product 9 -->
-            <div class="text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
-                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-orange-600 to-yellow-400 flex items-center justify-center">
+            <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
+                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center">
                     <span class="text-5xl">🌴</span>
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Deepak Verma</h3>
-                <p class="text-green-600 font-semibold">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹178/Liter</p>
-                <p class="text-sm text-gray-700">Fresh Harvest</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Manoj Sharma</h3>
+                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
+                <p class="text-green-600 font-semibold">₹160/Liter</p>
+                <p class="text-sm text-gray-700">Economy Pack</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700"><a href="Ratilerchat.html">Chat</a></button>
-                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">
-                        <a target="_blank">View Video</a>
-                    </button>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">View Video</button>
                 </div>
             </div>
 
             <!-- Palm Oil Product 10 -->
-            <div class="text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
+            <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
+                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-orange-600 to-yellow-400 flex items-center justify-center">
+                    <span class="text-5xl">🌴</span>
+                </div>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Deepak Verma</h3>
+                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
+                <p class="text-green-600 font-semibold">₹178/Liter</p>
+                <p class="text-sm text-gray-700">Fresh Harvest</p>
+                <div class="mt-4 space-x-4">
+                    <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">View Video</button>
+                </div>
+            </div>
+
+            <!-- Palm Oil Product 11 -->
+            <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
                 <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
                     <span class="text-5xl">🌴</span>
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Sanjay Gupta</h3>
-                <p class="text-green-600 font-semibold">Palm Oil</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Nilesh Bhosale</h3>
+                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
                 <p class="text-green-600 font-semibold">₹188/Liter</p>
                 <p class="text-sm text-gray-700">100% Pure</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700"><a href="Ratilerchat.html">Chat</a></button>
-                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">
-                        <a target="_blank">View Video</a>
-                    </button>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">View Video</button>
                 </div>
             </div>
-           
+
+            <!-- Palm Oil Product 12 -->
+            <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
+                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-orange-500 to-yellow-600 flex items-center justify-center">
+                    <span class="text-5xl">🌴</span>
+                </div>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Sanjay Patil</h3>
+                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
+                <p class="text-green-600 font-semibold">₹172/Liter</p>
+                <p class="text-sm text-gray-700">Traditional Method</p>
+                <div class="mt-4 space-x-4">
+                    <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">View Video</button>
+                </div>
+            </div>
         </div>
     </div>
 </body>

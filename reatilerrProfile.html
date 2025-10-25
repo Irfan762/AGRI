@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retailer Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+        <!-- Header with Profile Banner -->
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl shadow-2xl overflow-hidden mb-6">
+            <div class="p-8 relative">
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+                    <!-- Profile Picture -->
+                    <div class="relative group">
+                        <div id="profilePicContainer" class="w-32 h-32 rounded-full bg-white p-1 shadow-xl cursor-pointer hover:shadow-2xl transition duration-300">
+                            <div class="w-full h-full rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center text-white text-5xl font-bold">
+                                AS
+                            </div>
+                        </div>
+                        <button onclick="editProfile()" class="absolute bottom-0 right-0 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 transition">
+                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Profile Info -->
+                    <div class="flex-1 text-center md:text-left text-white">
+                        <h1 id="retailerName" class="text-4xl font-bold mb-2">Amit Shah Trading Co.</h1>
+                        <p id="retailerTitle" class="text-xl text-blue-100 mb-3">🏪 Premium Agricultural Products Retailer</p>
+                        <div class="flex flex-wrap gap-3 justify-center md:justify-start">
+                            <span class="bg-white bg-opacity-20 px-4 py-1 rounded-full text-sm backdrop-blur-sm">📍 Khargone Market, Maharashtra</span>
+                            <span class="bg-white bg-opacity-20 px-4 py-1 rounded-full text-sm backdrop-blur-sm">⭐ 4.9 Rating</span>
+                            <span class="bg-white bg-opacity-20 px-4 py-1 rounded-full text-sm backdrop-blur-sm">🏆 8 Years in Business</span>
+                            <span class="bg-white bg-opacity-20 px-4 py-1 rounded-full text-sm backdrop-blur-sm">✅ Verified Seller</span>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="flex gap-2">
+                        <button onclick="editProfile()" class="bg-white text-blue-600 px-6 py-2 rounded-lg font-semibold hover:bg-blue-50 transition shadow-lg">
+                            Edit Profile
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-6">
+            <!-- Left Column -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- Business Information -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                        <span class="mr-2">🏢</span> Business Information
+                    </h2>
+                    <div class="space-y-3">
+                        <div class="flex items-start">
+                            <span class="text-gray-500 w-32 text-sm">Business Name:</span>
+                            <span id="businessName" class="text-gray-800 font-medium">Amit Shah Trading Co.</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-gray-500 w-32 text-sm">Owner:</span>
+                            <span id="ownerName" class="text-gray-800 font-medium">Amit Shah</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-gray-500 w-32 text-sm">Email:</span>
+                            <span id="email" class="text-gray-800 font-medium">amit.trading@gmail.com</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-gray-500 w-32 text-sm">Phone:</span>
+                            <span id="phone" class="text-gray-800 font-medium">+91 87654 32109</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-gray-500 w-32 text-sm">GST Number:</span>
+                            <span id="gst" class="text-gray-800 font-medium">27ABCDE1234F1Z5</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-gray-500 w-32 text-sm">Established:</span>
+                            <span id="establishDate" class="text-gray-800 font-medium">March 2017</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Store Details -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                        <span class="mr-2">🏪</span> Store Details
+                    </h2>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Store Type</p>
+                            <p id="storeType" class="text-lg font-semibold text-blue-700">Wholesale & Retail</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Store Size</p>
+                            <p id="storeSize" class="text-lg font-semibold text-gray-800">2500 sq ft</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Warehouse</p>
+                            <p id="warehouse" class="text-lg font-semibold text-gray-800">5000 sq ft</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Operating Hours</p>
+                            <p id="hours" class="text-lg font-semibold text-gray-800">8:00 AM - 8:00 PM</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Licenses & Permits</p>
+                            <div class="flex flex-wrap gap-2 mt-2">
+                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold">FSSAI Licensed</span>
+                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">Trade License</span>
+                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs font-semibold">GST Registered</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Categories -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                        <span class="mr-2">📦</span> Product Categories
+                    </h2>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Grains & Cereals</span>
+                                <span class="text-sm text-gray-500">45%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-blue-500 to-indigo-500 h-2 rounded-full" style="width: 45%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Vegetables</span>
+                                <span class="text-sm text-gray-500">30%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-green-500 to-emerald-500 h-2 rounded-full" style="width: 30%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Pulses & Legumes</span>
+                                <span class="text-sm text-gray-500">15%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-yellow-500 to-orange-500 h-2 rounded-full" style="width: 15%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Others</span>
+                                <span class="text-sm text-gray-500">10%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full" style="width: 10%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Supplier Network -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                        <span class="mr-2">🤝</span> Supplier Network
+                    </h2>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">
+                                    RK
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-800 text-sm">Rajesh Kumar</p>
+                                    <p class="text-xs text-gray-500">Wheat Supplier</p>
+                                </div>
+                            </div>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Active</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+                                    MP
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-800 text-sm">Mohan Patil</p>
+                                    <p class="text-xs text-gray-500">Vegetable Supplier</p>
+                                </div>
+                            </div>
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-semibold">Active</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center text-white font-bold">
+                                    SD
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-800 text-sm">Suresh Desai</p>
+                                    <p class="text-xs text-gray-500">Pulse Supplier</p>
+                                </div>
+                            </div>
+                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-semibold">Active</span>
+                        </div>
+                    </div>
+                    <button onclick="viewAllSuppliers()" class="w-full mt-4 text-blue-600 hover:text-blue-700 font-semibold text-sm">
+                        View All Suppliers (12) →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Statistics Cards -->
+                <div class="grid md:grid-cols-4 gap-4">
+                    <div class="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-lg p-6 text-white">
+                        <div class="text-3xl mb-2">📦</div>
+                        <div class="text-3xl font-bold mb-1">245</div>
+                        <div class="text-blue-100 text-sm">Total Products</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl shadow-lg p-6 text-white">
+                        <div class="text-3xl mb-2">💰</div>
+                        <div class="text-3xl font-bold mb-1">₹25.8L</div>
+                        <div class="text-green-100 text-sm">Monthly Revenue</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl shadow-lg p-6 text-white">
+                        <div class="text-3xl mb-2">👥</div>
+                        <div class="text-3xl font-bold mb-1">1,245</div>
+                        <div class="text-purple-100 text-sm">Active Customers</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl shadow-lg p-6 text-white">
+                        <div class="text-3xl mb-2">📊</div>
+                        <div class="text-3xl font-bold mb-1">4,580</div>
+                        <div class="text-orange-100 text-sm">Orders This Month</div>
+                    </div>
+                </div>
+
+                <!-- Inventory Status -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                            <span class="mr-2">📊</span> Current Inventory
+                        </h2>
+                        <button onclick="manageInventory()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition">
+                            Manage Inventory
+                        </button>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="border-2 border-green-200 rounded-xl p-4 hover:border-green-400 transition">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-800">🌾 Wheat</h3>
+                                    <p class="text-sm text-gray-500">Premium Quality</p>
+                                </div>
+                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">In Stock</span>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Current Stock:</span>
+                                    <span class="font-medium">8,500 kg</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Price:</span>
+                                    <span class="font-medium">₹25/kg</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Value:</span>
+                                    <span class="font-medium text-green-600">₹2,12,500</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border-2 border-blue-200 rounded-xl p-4 hover:border-blue-400 transition">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-800">🍚 Rice</h3>
+                                    <p class="text-sm text-gray-500">Basmati Grade A</p>
+                                </div>
+                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold">In Stock</span>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Current Stock:</span>
+                                    <span class="font-medium">6,200 kg</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Price:</span>
+                                    <span class="font-medium">₹80/kg</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Value:</span>
+                                    <span class="font-medium text-blue-600">₹4,96,000</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border-2 border-yellow-200 rounded-xl p-4 hover:border-yellow-400 transition">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-800">🥔 Potato</h3>
+                                    <p class="text-sm text-gray-500">Fresh Local</p>
+                                </div>
+                                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-semibold">Low Stock</span>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Current Stock:</span>
+                                    <span class="font-medium">1,200 kg</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Price:</span>
+                                    <span class="font-medium">₹18/kg</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Value:</span>
+                                    <span class="font-medium text-yellow-600">₹21,600</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border-2 border-red-200 rounded-xl p-4 hover:border-red-400 transition">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-800">🌽 Corn</h3>
+                                    <p class="text-sm text-gray-500">Sweet Corn</p>
+                                </div>
+                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-semibold">Out of Stock</span>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Current Stock:</span>
+                                    <span class="font-medium">0 kg</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Price:</span>
+                                    <span class="font-medium">₹22/kg</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Reorder:</span>
+                                    <span class="font-medium text-red-600">Needed</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sales Performance Chart -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                        <span class="mr-2">📈</span> Sales Performance (Last 6 Months)
+                    </h2>
+                    <canvas id="salesChart"></canvas>
+                </div>
+
+                <!-- Recent Orders -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                            <span class="mr-2">📋</span> Recent Orders
+                        </h2>
+                        <button onclick="viewAllOrders()" class="text-blue-600 hover:text-blue-700 font-semibold text-sm">
+                            View All →
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b-2 border-gray-200">
+                                    <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Order ID</th>
+                                    <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Customer</th>
+                                    <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Items</th>
+                                    <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Amount</th>
+                                    <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="py-3 px-4 text-sm font-medium">#ORD-2458</td>
+                                    <td class="py-3 px-4 text-sm">Priya Restaurant</td>
+                                    <td class="py-3 px-4 text-sm">Wheat, Rice</td>
+                                    <td class="py-3 px-4 text-sm font-semibold">₹12,500</td>
+                                    <td class="py-3 px-4"><span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">Delivered</span></td>
+                                </tr>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="py-3 px-4 text-sm font-medium">#ORD-2457</td>
+                                    <td class="py-3 px-4 text-sm">Kumar Stores</td>
+                                    <td class="py-3 px-4 text-sm">Potato, Onion</td>
+                                    <td class="py-3 px-4 text-sm font-semibold">₹8,200</td>
+                                    <td class="py-3 px-4"><span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold">Processing</span></td>
+                                </tr>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="py-3 px-4 text-sm font-medium">#ORD-2456</td>
+                                    <td class="py-3 px-4 text-sm">Sharma Trading</td>
+                                    <td class="py-3 px-4 text-sm">Rice, Pulses</td>
+                                    <td class="py-3 px-4 text-sm font-semibold">₹15,800</td>
+                                    <td class="py-3 px-4"><span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-semibold">Pending</span></td>
+                                </tr>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="py-3 px-4 text-sm font-medium">#ORD-2455</td>
+                                    <td class="py-3 px-4 text-sm">Green Valley Hotel</td>
+                                    <td class="py-3 px-4 text-sm">Wheat, Corn</td>
+                                    <td class="py-3 px-4 text-sm font-semibold">₹9,500</td>
+                                    <td class="py-3 px-4"><span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">Delivered</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Recent Activities -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                        <span class="mr-2">📝</span> Recent Activities
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4 p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+                            <div class="text-2xl">✅</div>
+                            <div class="flex-1">
+                                <p class="font-semibold text-gray-800">Order Completed</p>
+                                <p class="text-sm text-gray-600">Delivered 500kg wheat to Priya Restaurant</p>
+                                <p class="text-xs text-gray-500 mt-1">2 hours ago</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                            <div class="text-2xl">📦</div>
+                            <div class="flex-1">
+                                <p class="font-semibold text-gray-800">New Stock Received</p>
+                                <p class="text-sm text-gray-600">Added 2000kg of premium rice to inventory</p>
+                                <p class="text-xs text-gray-500 mt-1">5 hours ago</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+                            <div class="text-2xl">⚠️</div>
+                            <div class="flex-1">
+                                <p class="font-semibold text-gray-800">Low Stock Alert</p>
+                                <p class="text-sm text-gray-600">Potato stock running low - only 1200kg remaining</p>
+                                <p class="text-xs text-gray-500 mt-1">1 day ago</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 p-4 bg-purple-50 rounded-lg border-l-4 border-purple-500">
+                            <div class="text-2xl">🤝</div>
+                            <div class="flex-1">
+                                <p class="font-semibold text-gray-800">New Supplier Added</p>
+                                <p class="text-sm text-gray-600">Connected with Ramesh Farms

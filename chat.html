@@ -37,7 +37,7 @@
             document.getElementById("messages").innerHTML = snapshot.docs.map(doc => `
                 <p><strong>${doc.data().user}:</strong> ${doc.data().message}</p>
             `).join("");
-        });
+        }); 
     </script>
 
 </body>

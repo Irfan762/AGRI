@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+        <!-- Header with Profile Banner -->
+        <div class="bg-gradient-to-r from-green-600 to-emerald-600 rounded-3xl shadow-2xl overflow-hidden mb-6">
+            <div class="p-8 relative">
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+                    <!-- Profile Picture -->
+                    <div class="relative group">
+                        <div id="profilePicContainer" class="w-32 h-32 rounded-full bg-white p-1 shadow-xl cursor-pointer hover:shadow-2xl transition duration-300">
+                            <div class="w-full h-full rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-white text-5xl font-bold">
+                                RK
+                            </div>
+                        </div>
+                        <button onclick="editProfile()" class="absolute bottom-0 right-0 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 transition">
+                            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Profile Info -->
+                    <div class="flex-1 text-center md:text-left text-white">
+                        <h1 id="farmerName" class="text-4xl font-bold mb-2">Rajesh Kumar</h1>
+                        <p id="farmerTitle" class="text-xl text-green-100 mb-3">🌾 Organic Farmer & Crop Expert</p>
+                        <div class="flex flex-wrap gap-3 justify-center md:justify-start">
+                            <span class="bg-white bg-opacity-20 px-4 py-1 rounded-full text-sm backdrop-blur-sm">📍 Khargone, Maharashtra</span>
+                            <span class="bg-white bg-opacity-20 px-4 py-1 rounded-full text-sm backdrop-blur-sm">⭐ 4.8 Rating</span>
+                            <span class="bg-white bg-opacity-20 px-4 py-1 rounded-full text-sm backdrop-blur-sm">🏆 5 Years Experience</span>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="flex gap-2">
+                        <button onclick="editProfile()" class="bg-white text-green-600 px-6 py-2 rounded-lg font-semibold hover:bg-green-50 transition shadow-lg">
+                            Edit Profile
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-6">
+            <!-- Left Column -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- Personal Information -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                        <span class="mr-2">👤</span> Personal Information
+                    </h2>
+                    <div class="space-y-3">
+                        <div class="flex items-start">
+                            <span class="text-gray-500 w-24 text-sm">Full Name:</span>
+                            <span id="fullName" class="text-gray-800 font-medium">Rajesh Kumar Patel</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-gray-500 w-24 text-sm">Email:</span>
+                            <span id="email" class="text-gray-800 font-medium">rajesh.farmer@gmail.com</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-gray-500 w-24 text-sm">Phone:</span>
+                            <span id="phone" class="text-gray-800 font-medium">+91 98765 43210</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-gray-500 w-24 text-sm">Age:</span>
+                            <span id="age" class="text-gray-800 font-medium">42 years</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-gray-500 w-24 text-sm">Joined:</span>
+                            <span id="joinDate" class="text-gray-800 font-medium">January 2020</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Farm Details -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                        <span class="mr-2">🚜</span> Farm Details
+                    </h2>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Farm Name</p>
+                            <p id="farmName" class="text-lg font-semibold text-green-700">Green Valley Organic Farm</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Total Land</p>
+                            <p id="totalLand" class="text-lg font-semibold text-gray-800">15 Acres</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Irrigation Type</p>
+                            <p id="irrigationType" class="text-lg font-semibold text-gray-800">Drip & Sprinkler</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Soil Type</p>
+                            <p id="soilType" class="text-lg font-semibold text-gray-800">Black Cotton Soil</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Certifications</p>
+                            <div class="flex flex-wrap gap-2 mt-2">
+                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">Organic Certified</span>
+                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold">ISO 9001</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skills & Expertise -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                        <span class="mr-2">🎯</span> Expertise
+                    </h2>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Wheat Cultivation</span>
+                                <span class="text-sm text-gray-500">95%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-green-500 to-emerald-500 h-2 rounded-full" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Organic Farming</span>
+                                <span class="text-sm text-gray-500">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-green-500 to-emerald-500 h-2 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Water Management</span>
+                                <span class="text-sm text-gray-500">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-green-500 to-emerald-500 h-2 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Pest Control</span>
+                                <span class="text-sm text-gray-500">80%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-green-500 to-emerald-500 h-2 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Statistics Cards -->
+                <div class="grid md:grid-cols-4 gap-4">
+                    <div class="bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl shadow-lg p-6 text-white">
+                        <div class="text-3xl mb-2">🌾</div>
+                        <div class="text-3xl font-bold mb-1">12</div>
+                        <div class="text-green-100 text-sm">Active Crops</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl shadow-lg p-6 text-white">
+                        <div class="text-3xl mb-2">📦</div>
+                        <div class="text-3xl font-bold mb-1">245</div>
+                        <div class="text-blue-100 text-sm">Total Harvests</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl shadow-lg p-6 text-white">
+                        <div class="text-3xl mb-2">💰</div>
+                        <div class="text-3xl font-bold mb-1">₹8.5L</div>
+                        <div class="text-purple-100 text-sm">Annual Revenue</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl shadow-lg p-6 text-white">
+                        <div class="text-3xl mb-2">🏆</div>
+                        <div class="text-3xl font-bold mb-1">15</div>
+                        <div class="text-orange-100 text-sm">Achievements</div>
+                    </div>
+                </div>
+
+                <!-- Current Crops -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                            <span class="mr-2">🌱</span> Current Crops
+                        </h2>
+                        <button onclick="addCrop()" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-700 transition">
+                            + Add Crop
+                        </button>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="border-2 border-green-200 rounded-xl p-4 hover:border-green-400 transition cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-800">🌾 Wheat</h3>
+                                    <p class="text-sm text-gray-500">Plot A - 5 Acres</p>
+                                </div>
+                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">Growing</span>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Planted:</span>
+                                    <span class="font-medium">Oct 15, 2025</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Expected Harvest:</span>
+                                    <span class="font-medium">Mar 10, 2026</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 35%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 text-right">35% Complete</p>
+                            </div>
+                        </div>
+
+                        <div class="border-2 border-yellow-200 rounded-xl p-4 hover:border-yellow-400 transition cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-800">🥔 Potato</h3>
+                                    <p class="text-sm text-gray-500">Plot B - 3 Acres</p>
+                                </div>
+                                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-semibold">Growing</span>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Planted:</span>
+                                    <span class="font-medium">Sep 20, 2025</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Expected Harvest:</span>
+                                    <span class="font-medium">Dec 25, 2025</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                    <div class="bg-yellow-500 h-2 rounded-full" style="width: 65%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 text-right">65% Complete</p>
+                            </div>
+                        </div>
+
+                        <div class="border-2 border-blue-200 rounded-xl p-4 hover:border-blue-400 transition cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-800">🌽 Corn</h3>
+                                    <p class="text-sm text-gray-500">Plot C - 4 Acres</p>
+                                </div>
+                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold">Growing</span>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Planted:</span>
+                                    <span class="font-medium">Aug 5, 2025</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Expected Harvest:</span>
+                                    <span class="font-medium">Nov 20, 2025</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 text-right">85% Complete</p>
+                            </div>
+                        </div>
+
+                        <div class="border-2 border-purple-200 rounded-xl p-4 hover:border-purple-400 transition cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-800">🍅 Tomato</h3>
+                                    <p class="text-sm text-gray-500">Plot D - 2 Acres</p>
+                                </div>
+                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs font-semibold">Planning</span>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Planned Start:</span>
+                                    <span class="font-medium">Nov 1, 2025</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Expected Harvest:</span>
+                                    <span class="font-medium">Feb 15, 2026</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                    <div class="bg-purple-500 h-2 rounded-full" style="width: 10%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 text-right">Planning Phase</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Harvest History Chart -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                        <span class="mr-2">📊</span> Harvest Production (Last 6 Months)
+                    </h2>
+                    <canvas id="harvestChart"></canvas>
+                </div>
+
+                <!-- Recent Activities -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                        <span class="mr-2">📝</span> Recent Activities
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4 p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+                            <div class="text-2xl">🌾</div>
+                            <div class="flex-1">
+                                <p class="font-semibold text-gray-800">Wheat Planted</p>
+                                <p class="text-sm text-gray-600">Started wheat cultivation in Plot A (5 acres)</p>
+                                <p class="text-xs text-gray-500 mt-1">2 days ago</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                            <div class="text-2xl">💧</div>
+                            <div class="flex-1">
+                                <p class="font-semibold text-gray-800">Irrigation System Updated</p>
+                                <p class="text-sm text-gray-600">Installed new drip irrigation in Plot C</p>
+                                <p class="text-xs text-gray-500 mt-1">5 days ago</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+                            <div class="text-2xl">🏆</div>
+                            <div class="flex-1">
+                                <p class="font-semibold text-gray-800">Achievement Unlocked</p>
+                                <p class="text-sm text-gray-600">Completed 5 years of successful organic farming</p>
+                                <p class="text-xs text-gray-500 mt-1">1 week ago</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 p-4 bg-purple-50 rounded-lg border-l-4 border-purple-500">
+                            <div class="text-2xl">📦</div>
+                            <div class="flex-1">
+                                <p class="font-semibold text-gray-800">Corn Harvested</p>
+                                <p class="text-sm text-gray-600">Successfully harvested 850 kg of corn from Plot C</p>
+                                <p class="text-xs text-gray-500 mt-1">2 weeks ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-screen overflow-y-auto p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-bold text-gray-800">Edit Profile</h2>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
+                    <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" value="Rajesh Kumar Patel">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                    <input type="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" value="rajesh.farmer@gmail.com">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Phone</label>
+                    <input type="tel" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" value="+91 98765 43210">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Farm Name</label>
+                    <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" value="Green Valley Organic Farm">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Total Land (Acres)</label>
+                    <input type="number" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" value="15">
+                </div>
+                <div class="flex gap-4 pt-4">
+                    <button type="button" onclick="saveProfile()" class="flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">
+                        Save Changes
+                    </button>
+                    <button type="button" onclick="closeModal()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300 transition">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+  <nav class="fixed bottom-0 w-full bg-white shadow-lg border-t z-50">
+        <div class="flex justify-around py-2">
+            <a href="farmerWeb.html" class="flex flex-col items-center text-green-600">
+                <div class="rounded-full bg-green-100 w-10 h-10 flex items-center justify-center mb-1">
+                    <i class="fas fa-home"></i>
+                </div>
+                <span class="text-xs font-medium" id="home">Home</span>
+            </a>
+            <a href="post.html" class="flex flex-col items-center text-gray-500 hover:text-green-600 transition">
+                <div class="rounded-full bg-gray-100 w-10 h-10 flex items-center justify-center mb-1 hover:bg-green-100 transition">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <span class="text-xs font-medium" id="post">Post</span>
+            </a>
+            <a href="farmerCht.html" class="flex flex-col items-center text-gray-500 hover:text-green-600 transition">
+                <div class="rounded-full bg-gray-100 w-10 h-10 flex items-center justify-center mb-1 hover:bg-green-100 transition">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <span class="text-xs font-medium" id="chat">Chat</span>
+            </a>
+            <a href="farmerAccount.html" class="flex flex-col items-center text-gray-500 hover:text-green-600 transition">
+                <div class="rounded-full bg-gray-100 w-10 h-10 flex items-center justify-center mb-1 hover:bg-green-100 transition">
+                    <i class="fas fa-user"></i>
+                </div>
+                <span class="text-xs font-medium" id="account">Account</span>
+            </a>
+        </div>
+    </nav>
+    <script>
+        // Initialize Harvest Chart
+        const ctx = document.getElementById('harvestChart').getContext('2d');
+        const harvestChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                datasets: [{
+                    label: 'Wheat (tons)',
+                    data: [12, 15, 10, 18, 14, 16],
+                    backgroundColor: 'rgba(34, 197, 94, 0.7)',
+                    borderColor: 'rgb(34, 197, 94)',
+                    borderWidth: 2
+                }, {
+                    label: 'Rice (tons)',
+                    data: [8, 10, 12, 9, 11, 13],
+                    backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                    borderColor: 'rgb(59, 130, 246)',
+                    borderWidth: 2
+                }, {
+                    label: 'Corn (tons)',
+                    data: [6, 8, 7, 9, 10, 8],
+                    backgroundColor: 'rgba(251, 191, 36, 0.7)',
+                    borderColor: 'rgb(251, 191, 36)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value + ' tons';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        function editProfile() {
+            document.getElementById('editModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('editModal').classList.add('hidden');
+        }
+
+        function saveProfile() {
+            alert('Profile updated successfully! ✅');
+            closeModal();
+        }
+
+        function addCrop() {
+            alert('Add new crop feature coming soon! 🌱');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('editModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
