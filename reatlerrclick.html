@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Palm Oil Farmers</title>
+    <title>Millets Farmers</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @keyframes fadeIn {
@@ -98,7 +98,7 @@
     <div class="w-3/4 flex flex-col">
         <!-- Header -->
         <div class="bg-green-600 p-6 flex items-center justify-between text-white shadow-lg">
-            <h1 class="text-2xl font-bold">Palm Oil Farmers & Products</h1>
+            <h1 class="text-2xl font-bold">Millets Farmers & Products</h1>
             <input type="text" placeholder="Search Farmers..." 
                 class="p-3 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-300 shadow-md"
                 id="searchInput" onkeyup="searchFarmers()">
@@ -106,20 +106,20 @@
         
         <!-- Farmer Profiles Grid -->
         <div class="grid grid-cols-2 gap-6 p-6 flex-grow overflow-auto">
-            <!-- Palm Oil Product 1 with Image -->
+            <!-- Millet Product 1 - Foxtail Millet -->
             <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
                 <div class="flex justify-center">
-                    <img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400&h=400&fit=crop" 
-                         alt="Palm Oil" 
+                    <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&h=400&fit=crop" 
+                         alt="Foxtail Millet" 
                          class="product-image"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-orange-400 to-yellow-600 items-center justify-center" style="display:none;">
-                        <span class="text-5xl">🌴</span>
+                    <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-amber-400 to-yellow-600 items-center justify-center" style="display:none;">
+                        <span class="text-5xl">🌾</span>
                     </div>
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Krishna Menon</h3>
-                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹182/Liter</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Ramesh Kumar</h3>
+                <p class="text-green-600 font-semibold product-type">Foxtail Millet</p>
+                <p class="text-green-600 font-semibold">₹80/KG</p>
                 <p class="text-sm text-gray-700">Premium Quality, Organic</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
@@ -128,15 +128,17 @@
                 </div>
             </div>
 
-            <!-- Palm Oil Product 2 -->
+            <!-- Millet Product 2 - Pearl Millet -->
             <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
-                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-orange-400 to-yellow-600 flex items-center justify-center">
-                    <span class="text-5xl">🌴</span>
+                <div class="flex justify-center">
+                    <img src="https://images.unsplash.com/photo-1560493676-04071c5f467b?w=400&h=400&fit=crop" 
+                         alt="Pearl Millet" 
+                         class="product-image">
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Rajesh Kumar</h3>
-                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹180/Liter</p>
-                <p class="text-sm text-gray-700">Organic, Cold-pressed</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Suresh Patil</h3>
+                <p class="text-green-600 font-semibold product-type">Pearl Millet</p>
+                <p class="text-green-600 font-semibold">₹70/KG</p>
+                <p class="text-sm text-gray-700">Fresh Harvest, Pure</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
                     <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
@@ -144,14 +146,34 @@
                 </div>
             </div>
 
-            <!-- Palm Oil Product 3 -->
+            <!-- Millet Product 3 - Finger Millet -->
             <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
-                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center">
-                    <span class="text-5xl">🌴</span>
+                <div class="flex justify-center">
+                    <img src="https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=400&h=400&fit=crop" 
+                         alt="Finger Millet" 
+                         class="product-image">
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Amit Patel</h3>
-                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹175/Liter</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Vijay Singh</h3>
+                <p class="text-green-600 font-semibold product-type">Finger Millet (Ragi)</p>
+                <p class="text-green-600 font-semibold">₹85/KG</p>
+                <p class="text-sm text-gray-700">High Calcium, Organic</p>
+                <div class="mt-4 space-x-4">
+                    <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">View Video</button>
+                </div>
+            </div>
+
+            <!-- Millet Product 4 - Proso Millet -->
+            <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
+                <div class="flex justify-center">
+                    <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&h=400&fit=crop" 
+                         alt="Proso Millet" 
+                         class="product-image">
+                </div>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Prakash Reddy</h3>
+                <p class="text-green-600 font-semibold product-type">Proso Millet</p>
+                <p class="text-green-600 font-semibold">₹90/KG</p>
                 <p class="text-sm text-gray-700">Premium Quality</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
@@ -160,15 +182,17 @@
                 </div>
             </div>
 
-            <!-- Palm Oil Product 4 -->
+            <!-- Millet Product 5 - Barnyard Millet -->
             <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
-                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-orange-300 to-red-400 flex items-center justify-center">
-                    <span class="text-5xl">🌴</span>
+                <div class="flex justify-center">
+                    <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&h=400&fit=crop" 
+                         alt="Barnyard Millet" 
+                         class="product-image">
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Suresh Naik</h3>
-                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹190/Liter</p>
-                <p class="text-sm text-gray-700">Extra Virgin, Organic</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Ashok Yadav</h3>
+                <p class="text-green-600 font-semibold product-type">Barnyard Millet</p>
+                <p class="text-green-600 font-semibold">₹95/KG</p>
+                <p class="text-sm text-gray-700">Gluten-Free, Organic</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
                     <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
@@ -176,15 +200,17 @@
                 </div>
             </div>
 
-            <!-- Palm Oil Product 5 -->
+            <!-- Millet Product 6 - Little Millet -->
             <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
-                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-yellow-400 to-orange-600 flex items-center justify-center">
-                    <span class="text-5xl">🌴</span>
+                <div class="flex justify-center">
+                    <img src="https://images.unsplash.com/photo-1560493676-04071c5f467b?w=400&h=400&fit=crop" 
+                         alt="Little Millet" 
+                         class="product-image">
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Vikram Singh</h3>
-                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹165/Liter</p>
-                <p class="text-sm text-gray-700">Bulk Available</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Mohan Desai</h3>
+                <p class="text-green-600 font-semibold product-type">Little Millet</p>
+                <p class="text-green-600 font-semibold">₹88/KG</p>
+                <p class="text-sm text-gray-700">Rich in Fiber</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
                     <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
@@ -192,30 +218,16 @@
                 </div>
             </div>
 
-            <!-- Palm Oil Product 6 -->
+            <!-- Millet Product 7 - Kodo Millet -->
             <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
-                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center">
-                    <span class="text-5xl">🌴</span>
+                <div class="flex justify-center">
+                    <img src="https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=400&h=400&fit=crop" 
+                         alt="Kodo Millet" 
+                         class="product-image">
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Ramesh Yadav</h3>
-                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹185/Liter</p>
-                <p class="text-sm text-gray-700">Pure & Natural</p>
-                <div class="mt-4 space-x-4">
-                    <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
-                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-700">View Video</button>
-                </div>
-            </div>
-
-            <!-- Palm Oil Product 7 -->
-            <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
-                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-yellow-600 to-orange-400 flex items-center justify-center">
-                    <span class="text-5xl">🌴</span>
-                </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Prakash Reddy</h3>
-                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹170/Liter</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Anil Sharma</h3>
+                <p class="text-green-600 font-semibold product-type">Kodo Millet</p>
+                <p class="text-green-600 font-semibold">₹92/KG</p>
                 <p class="text-sm text-gray-700">Certified Organic</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
@@ -224,15 +236,17 @@
                 </div>
             </div>
 
-            <!-- Palm Oil Product 8 -->
+            <!-- Millet Product 8 - Sorghum Millet -->
             <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
-                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
-                    <span class="text-5xl">🌴</span>
+                <div class="flex justify-center">
+                    <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&h=400&fit=crop" 
+                         alt="Sorghum Millet" 
+                         class="product-image">
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Arjun Desai</h3>
-                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹195/Liter</p>
-                <p class="text-sm text-gray-700">Premium Cold-pressed</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Ravi Naik</h3>
+                <p class="text-green-600 font-semibold product-type">Sorghum Millet (Jowar)</p>
+                <p class="text-green-600 font-semibold">₹75/KG</p>
+                <p class="text-sm text-gray-700">High Protein</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
                     <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
@@ -240,15 +254,17 @@
                 </div>
             </div>
 
-            <!-- Palm Oil Product 9 -->
+            <!-- Millet Product 9 - Foxtail Millet -->
             <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
-                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center">
-                    <span class="text-5xl">🌴</span>
+                <div class="flex justify-center">
+                    <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&h=400&fit=crop" 
+                         alt="Foxtail Millet" 
+                         class="product-image">
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Manoj Sharma</h3>
-                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹160/Liter</p>
-                <p class="text-sm text-gray-700">Economy Pack</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Ganesh Patel</h3>
+                <p class="text-green-600 font-semibold product-type">Foxtail Millet</p>
+                <p class="text-green-600 font-semibold">₹82/KG</p>
+                <p class="text-sm text-gray-700">Bulk Available, Organic</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
                     <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
@@ -256,15 +272,17 @@
                 </div>
             </div>
 
-            <!-- Palm Oil Product 10 -->
+            <!-- Millet Product 10 - Pearl Millet -->
             <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
-                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-orange-600 to-yellow-400 flex items-center justify-center">
-                    <span class="text-5xl">🌴</span>
+                <div class="flex justify-center">
+                    <img src="https://images.unsplash.com/photo-1560493676-04071c5f467b?w=400&h=400&fit=crop" 
+                         alt="Pearl Millet" 
+                         class="product-image">
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Deepak Verma</h3>
-                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹178/Liter</p>
-                <p class="text-sm text-gray-700">Fresh Harvest</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Dinesh Verma</h3>
+                <p class="text-green-600 font-semibold product-type">Pearl Millet</p>
+                <p class="text-green-600 font-semibold">₹72/KG</p>
+                <p class="text-sm text-gray-700">Fresh & Natural</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
                     <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
@@ -272,15 +290,17 @@
                 </div>
             </div>
 
-            <!-- Palm Oil Product 11 -->
+            <!-- Millet Product 11 - Finger Millet -->
             <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
-                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
-                    <span class="text-5xl">🌴</span>
+                <div class="flex justify-center">
+                    <img src="https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=400&h=400&fit=crop" 
+                         alt="Finger Millet" 
+                         class="product-image">
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Nilesh Bhosale</h3>
-                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹188/Liter</p>
-                <p class="text-sm text-gray-700">100% Pure</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Kiran Bhosale</h3>
+                <p class="text-green-600 font-semibold product-type">Finger Millet (Ragi)</p>
+                <p class="text-green-600 font-semibold">₹87/KG</p>
+                <p class="text-sm text-gray-700">Premium Organic</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
                     <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>
@@ -288,15 +308,17 @@
                 </div>
             </div>
 
-            <!-- Palm Oil Product 12 -->
+            <!-- Millet Product 12 - Sorghum Millet -->
             <div class="farmer-card text-center bg-white p-8 rounded-lg shadow-lg transform transition hover:scale-105">
-                <div class="w-28 h-28 rounded-full mx-auto shadow-md bg-gradient-to-br from-orange-500 to-yellow-600 flex items-center justify-center">
-                    <span class="text-5xl">🌴</span>
+                <div class="flex justify-center">
+                    <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&h=400&fit=crop" 
+                         alt="Sorghum Millet" 
+                         class="product-image">
                 </div>
-                <h3 class="mt-4 text-xl font-semibold text-green-700">Sanjay Patil</h3>
-                <p class="text-green-600 font-semibold product-type">Palm Oil</p>
-                <p class="text-green-600 font-semibold">₹172/Liter</p>
-                <p class="text-sm text-gray-700">Traditional Method</p>
+                <h3 class="mt-4 text-xl font-semibold text-green-700">Santosh Jadhav</h3>
+                <p class="text-green-600 font-semibold product-type">Sorghum Millet</p>
+                <p class="text-green-600 font-semibold">₹78/KG</p>
+                <p class="text-sm text-gray-700">Traditional Quality</p>
                 <div class="mt-4 space-x-4">
                     <button class="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-700">Call</button>
                     <button class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700">Chat</button>

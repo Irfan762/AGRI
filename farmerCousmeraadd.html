@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Millets Farmer Connect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .glass { backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.2); }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-green-200 min-h-screen">
+    <nav class="bg-white shadow-lg sticky top-0 z-50 p-6 flex justify-between items-center">
+        <h2 class="text-3xl font-bold text-red-500">🌾GO<span class="text-blue-600">FaRm</span></h2>
+        <input type="text" id="searchBar" class="border p-2 rounded-lg" placeholder="Search millets...">
+        <div class="flex gap-4">
+            <button id="addItemBtn" class="bg-blue-600 text-white px-6 py-2 rounded-full">
+                ➕ Add Item
+            </button>
+        </div>
+    </nav>
+
+    <div class="text-center py-16">
+        <h1 class="text-6xl font-extrabold text-green-700">Fresh Millets from Farmers 🌾</h1>
+    </div>
+
+    <div class="flex gap-4 justify-center mb-8">
+        <button onclick="loadProducts('Millets')" class="bg-green-700 text-white px-6 py-2 rounded-full">All Millets</button>
+    </div>
+
+    <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 p-4"></div>
+
+    <!-- Add Item Modal -->
+    <div id="addItemModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-4 text-green-700">Add New Millet Product</h2>
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 mb-2">Product Name</label>
+                <input type="text" id="newProductName" class="w-full border p-2 rounded" placeholder="e.g., Foxtail Millet">
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 mb-2">Price (₹ per KG)</label>
+                <input type="number" id="newProductPrice" class="w-full border p-2 rounded" placeholder="Enter price">
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 mb-2">Image URL</label>
+                <input type="text" id="newProductImage" class="w-full border p-2 rounded" placeholder="Enter image URL" value="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400">
+            </div>
+            
+            <div class="flex justify-end gap-4 mt-6">
+                <button onclick="closeAddItemModal()" class="bg-gray-300 text-gray-800 px-6 py-2 rounded">Cancel</button>
+                <button onclick="saveNewProduct()" class="bg-green-600 text-white px-6 py-2 rounded">Save Product</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Millets products data stored in memory
+        let products = [
+            { id: 1, name: 'Foxtail Millet', price: 80, category: 'Millets', image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400' },
+            { id: 2, name: 'Pearl Millet', price: 70, category: 'Millets', image: 'https://images.unsplash.com/photo-1560493676-04071c5f467b?w=400' },
+            { id: 3, name: 'Finger Millet (Ragi)', price: 85, category: 'Millets', image: 'https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=400' },
+            { id: 4, name: 'Proso Millet', price: 90, category: 'Millets', image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400' },
+            { id: 5, name: 'Barnyard Millet', price: 95, category: 'Millets', image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400' },
+            { id: 6, name: 'Little Millet', price: 88, category: 'Millets', image: 'https://images.unsplash.com/photo-1560493676-04071c5f467b?w=400' },
+            { id: 7, name: 'Kodo Millet', price: 92, category: 'Millets', image: 'https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=400' },
+            { id: 8, name: 'Sorghum Millet (Jowar)', price: 75, category: 'Millets', image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400' }
+        ];
+        
+        let nextId = 9;
+        
+        // Load products
+        function loadProducts(category = 'Millets') {
+            displayProducts(products);
+        }
+        
+        // Display products in the grid
+        function displayProducts(productsToDisplay) {
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = '';
+            
+            if (!productsToDisplay || productsToDisplay.length === 0) {
+                productsGrid.innerHTML = "<p class='text-center col-span-full text-gray-600 text-xl'>No products available</p>";
+                return;
+            }
+            
+            productsToDisplay.forEach(product => {
+                const productHTML = `
+                    <div class='bg-white p-6 shadow-xl rounded-lg text-center transform transition hover:scale-105'>
+                        <img src='${product.image}' class='h-40 w-40 mx-auto rounded-lg object-cover' onerror="this.src='https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400'">
+                        <h2 class='text-2xl font-bold mt-4 text-gray-800'>${product.name}</h2>
+                        <p class='text-green-700 font-semibold text-lg'>₹${product.price} / Kg</p>
+                        <button class='bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full mt-4 transition' onclick='removeProduct(${product.id})'>Remove</button>
+                    </div>`;
+                productsGrid.innerHTML += productHTML;
+            });
+        }
+        
+        // Search products
+        function searchProducts() {
+            const query = document.getElementById('searchBar').value.trim().toLowerCase();
+            
+            if (!query) {
+                displayProducts(products);
+                return;
+            }
+            
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(query)
+            );
+            
+            displayProducts(filteredProducts);
+        }
+        
+        // Remove product
+        function removeProduct(id) {
+            if (confirm('Are you sure you want to remove this product?')) {
+                products = products.filter(p => p.id !== id);
+                loadProducts();
+                alert('Product removed successfully!');
+            }
+        }
+        
+        // Add Item Modal Functions
+        function openAddItemModal() {
+            document.getElementById('addItemModal').classList.remove('hidden');
+        }
+        
+        function closeAddItemModal() {
+            document.getElementById('addItemModal').classList.add('hidden');
+        }
+        
+        // Save new product
+        function saveNewProduct() {
+            const name = document.getElementById('newProductName').value.trim();
+            const price = parseFloat(document.getElementById('newProductPrice').value);
+            const image = document.getElementById('newProductImage').value.trim() || 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400';
+            
+            if (!name || !price || price <= 0) {
+                alert('Please enter valid product name and price');
+                return;
+            }
+            
+            const newProduct = {
+                id: nextId++,
+                name: name,
+                price: price,
+                category: 'Millets',
+                image: image
+            };
+            
+            products.push(newProduct);
+            
+            alert('Product added successfully!');
+            
+            // Reset form
+            document.getElementById('newProductName').value = '';
+            document.getElementById('newProductPrice').value = '';
+            document.getElementById('newProductImage').value = 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400';
+            
+            // Close modal
+            closeAddItemModal();
+            
+            // Reload products
+            loadProducts('Millets');
+        }
+        
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial load
+            loadProducts('Millets');
+            
+            // Search on keyup
+            document.getElementById('searchBar').addEventListener('keyup', searchProducts);
+            
+            // Add item button
+            document.getElementById('addItemBtn').addEventListener('click', openAddItemModal);
+        });
+    </script>
+</body>
+</html>

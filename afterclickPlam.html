@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Palm Oil Products</title>
+    <title>Millets Products</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @keyframes fadeIn {
@@ -15,7 +15,7 @@
         }
     </style>
 </head>
-<body class="bg-amber-50 min-h-screen flex flex-col items-center">
+<body class="bg-green-50 min-h-screen flex flex-col items-center">
 
     <!-- Header with Back Button -->
     <div class="w-full flex items-center justify-between px-6 py-4 bg-white shadow-md">
@@ -26,7 +26,7 @@
                 </svg>
             </button>
         </a>
-        <h1 class="text-2xl font-bold text-orange-800">Palm Oil Products</h1>
+        <h1 class="text-2xl font-bold text-green-800">Millets Products</h1>
         <div></div>
     </div>
 
@@ -36,21 +36,21 @@
     </div>
 
     <!-- Floating Add Button -->
-    <button onclick="openForm()" class="fixed bottom-6 right-6 bg-orange-700 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-lg animate-bounce transition-all duration-300 hover:scale-110 text-3xl">
+    <button onclick="openForm()" class="fixed bottom-6 right-6 bg-green-700 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-lg animate-bounce transition-all duration-300 hover:scale-110 text-3xl">
         +
     </button>
 
     <!-- Add Product Form -->
     <div id="add-product-modal" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
         <div class="bg-white p-6 rounded-lg shadow-lg w-96 animate-fadeIn">
-            <h2 class="text-xl font-bold mb-4">Add Palm Oil Product</h2>
+            <h2 class="text-xl font-bold mb-4">Add Millet Product</h2>
             <input type="text" id="product-name" placeholder="Product Name" class="w-full border p-2 mb-2 rounded">
             <input type="text" id="product-price" placeholder="Price (₹)" class="w-full border p-2 mb-2 rounded">
             <input type="text" id="product-quantity" placeholder="Quantity" class="w-full border p-2 mb-2 rounded">
-            <input type="text" id="product-unit" placeholder="Unit (e.g., per Liter, per KG)" class="w-full border p-2 mb-2 rounded">
+            <input type="text" id="product-unit" placeholder="Unit (e.g., per KG)" class="w-full border p-2 mb-2 rounded">
             <input type="text" id="product-image" placeholder="Image URL" class="w-full border p-2 mb-4 rounded">
             
-            <button onclick="addProduct()" class="w-full bg-orange-600 text-white p-2 rounded transition-all duration-300 hover:bg-orange-700">Add Product</button>
+            <button onclick="addProduct()" class="w-full bg-green-600 text-white p-2 rounded transition-all duration-300 hover:bg-green-700">Add Product</button>
             <button onclick="closeForm()" class="w-full mt-2 bg-gray-400 text-white p-2 rounded transition-all duration-300 hover:bg-gray-500">Cancel</button>
         </div>
     </div>
@@ -69,55 +69,71 @@
     </div>
 
     <script>
-        // Palm oil products data
+        // Millets products data
         let products = [
             {
                 id: 1,
-                name: "Crude Palm Oil",
-                price: "₹ 95",
-                quantity: "1000",
-                unit: "per Liter",
-                image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400&h=400&fit=crop"
+                name: "Foxtail Millet",
+                price: "₹ 80",
+                quantity: "500",
+                unit: "per KG",
+                image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&h=400&fit=crop"
             },
             {
                 id: 2,
-                name: "Refined Palm Oil",
-                price: "₹ 110",
-                quantity: "500",
-                unit: "per Liter",
-                image: "https://images.unsplash.com/photo-1624365168968-85b6d1b4da43?w=400&h=400&fit=crop"
+                name: "Pearl Millet",
+                price: "₹ 70",
+                quantity: "600",
+                unit: "per KG",
+                image: "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=400&h=400&fit=crop"
             },
             {
                 id: 3,
-                name: "Palm Olein",
-                price: "₹ 105",
-                quantity: "800",
-                unit: "per Liter",
-                image: "https://images.unsplash.com/photo-1615485500834-bc10199bc160?w=400&h=400&fit=crop"
+                name: "Finger Millet",
+                price: "₹ 85",
+                quantity: "450",
+                unit: "per KG",
+                image: "https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=400&h=400&fit=crop"
             },
             {
                 id: 4,
-                name: "Palm Stearin",
-                price: "₹ 85",
-                quantity: "600",
+                name: "Proso Millet",
+                price: "₹ 90",
+                quantity: "400",
                 unit: "per KG",
-                image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400&h=400&fit=crop"
+                image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&h=400&fit=crop"
             },
             {
                 id: 5,
-                name: "RBD Palm Oil",
-                price: "₹ 100",
-                quantity: "750",
-                unit: "per Liter",
-                image: "https://images.unsplash.com/photo-1598104181061-a0c2dc64f6db?w=400&h=400&fit=crop"
+                name: "Barnyard Millet",
+                price: "₹ 95",
+                quantity: "350",
+                unit: "per KG",
+                image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&h=400&fit=crop"
             },
             {
                 id: 6,
-                name: "Palm Kernel Oil",
-                price: "₹ 120",
-                quantity: "400",
-                unit: "per Liter",
-                image: "https://images.unsplash.com/photo-1609840112855-9ab5ad8f66e4?w=400&h=400&fit=crop"
+                name: "Little Millet",
+                price: "₹ 88",
+                quantity: "420",
+                unit: "per KG",
+                image: "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=400&h=400&fit=crop"
+            },
+            {
+                id: 7,
+                name: "Kodo Millet",
+                price: "₹ 92",
+                quantity: "380",
+                unit: "per KG",
+                image: "https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=400&h=400&fit=crop"
+            },
+            {
+                id: 8,
+                name: "Sorghum Millet",
+                price: "₹ 75",
+                quantity: "550",
+                unit: "per KG",
+                image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&h=400&fit=crop"
             }
         ];
 
@@ -136,10 +152,10 @@
                     <div class="bg-white rounded-lg shadow-lg p-4 flex flex-col items-center relative transition-all duration-300 hover:scale-105 hover:shadow-xl animate-fadeIn">
                         <button onclick="removeProduct(${product.id})" class="absolute top-2 right-2 bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-all duration-300">×</button>
                         <img src="${product.image}" alt="${product.name}" class="w-32 h-32 object-cover rounded-md mb-2 hover:scale-110 transition-all duration-300">
-                        <p class="text-orange-600 font-semibold">${product.price}</p>
+                        <p class="text-green-600 font-semibold">${product.price}</p>
                         <p class="text-gray-500">${product.quantity} ${product.unit}</p>
                         <h3 class="text-lg font-bold mt-2">${product.name}</h3>
-                        <button onclick="viewDetails(${product.id})" class="mt-3 bg-orange-500 text-white px-4 py-2 rounded-md transition-all duration-300 hover:bg-orange-700">View Details</button>
+                        <button onclick="viewDetails(${product.id})" class="mt-3 bg-green-500 text-white px-4 py-2 rounded-md transition-all duration-300 hover:bg-green-700">View Details</button>
                     </div>
                 `;
                 container.innerHTML += productCard;
